@@ -59,14 +59,29 @@ public class ControllerServlet extends HttpServlet {
         } 
         
         else if (serv_path.equals("/refresh.do")) {
-            //...
+            UserAccess current_user = (UserAccess)session.getAttribute("useraccess");
+            if(current_user != null){
+                return ("/view/wallview.jsp");
+            }
             return "/error-not-loggedin.html";
         } 
         
         else if (serv_path.equals("/logout.do")) {
-            //...
-            return "/goodbye.html";
+            UserAccess current_user = (UserAccess)session.getAttribute("useraccess");
+            if (current_user != null){
+                session.removeAttribute("useraccess");
+                return "/goodbye.html";
+            }
+            return "/error-not-loggedin.html";
         } 
+        
+        else if (serv_path.equals("/delete.do")) {
+            UserAccess current_user = (UserAccess)session.getAttribute("useraccess");
+            int position = Integer.parseInt(request.getParameter("position"));
+            current_user.delete(position);
+            return ("/view/wallview.jsp");
+            
+        }
         
         else {
             return "/error-bad-action.html";

@@ -45,7 +45,7 @@
         <%
             List<Message> message_list = current_user.getAllMessages();
             //Iterate over all the messges to display them
-            System.out.println("\"Hello\"");
+            int counter = 0;
             if(!message_list.isEmpty()){
                 for(Message it_msg : message_list){
                     System.out.println(it_msg.getContent());
@@ -66,18 +66,22 @@
         <td width="14%" valign="center" align="middle">
             <form action="delete.do" method="post">
                 <input type="hidden"
-                       name="index"
+                       name="current_user"
                        value="<%it_msg.getOwner();%>">
                 <input type="submit"
                        name="delete"
                        value="delete">
+                <input type="hidden"
+                       name="position"
+                       value="<%=counter%>">
             </form>
         </td>
 
         </font> 
     </tr>
 
-    <% }}%>
+    <% }}
+    counter++;%>
 
 </table>
 
